@@ -10,7 +10,9 @@ import org.springframework.security.web.server.context.SecurityContextRepository
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-
+/**
+ * @author Sebastien Astie
+ */
 public class BearerSecurityContextRepository implements SecurityContextRepository {
     private final static Logger logger = LoggerFactory.getLogger(BearerSecurityContextRepository.class);
 

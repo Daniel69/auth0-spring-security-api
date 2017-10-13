@@ -15,6 +15,9 @@ import reactor.core.publisher.Mono;
 
 /**
  * Utility class for configuring Security for your Spring Reactive API
+ *
+ * @author Sebastien Astie
+ *
  */
 public class JwtWebSecurityConfigurer {
 

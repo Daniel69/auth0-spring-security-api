@@ -6,6 +6,9 @@ import org.springframework.security.web.server.AuthenticationEntryPoint;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+/**
+ * @author Sebastien Astie
+ */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

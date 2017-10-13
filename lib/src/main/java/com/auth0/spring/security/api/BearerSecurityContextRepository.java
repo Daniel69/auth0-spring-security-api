@@ -1,11 +1,9 @@
 package com.auth0.spring.security.api;
 
-import com.auth0.spring.security.api.authentication.PreAuthenticatedAuthenticationJsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.SecurityContextRepository;
 
@@ -17,14 +15,8 @@ public class BearerSecurityContextRepository implements SecurityContextRepositor
 
     @Override
     public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
         String token = tokenFromRequest(requestResponseHolder.getRequest());
-        Authentication authentication = PreAuthenticatedAuthenticationJsonWebToken.usingToken(token);
-        if (authentication != null) {
-            context.setAuthentication(authentication);
-            logger.debug("Found bearer token in request. Saving it in SecurityContext");
-        }
-        return context;
+        return TokenUtils.createSecurityContext(token, logger);
     }
 
     @Override
@@ -37,18 +29,6 @@ public class BearerSecurityContextRepository implements SecurityContextRepositor
     }
 
     private String tokenFromRequest(HttpServletRequest request) {
-        final String value = request.getHeader("Authorization");
-
-        if (value == null || !value.toLowerCase().startsWith("bearer")) {
-            return null;
-        }
-
-        String[] parts = value.split(" ");
-
-        if (parts.length < 2) {
-            return null;
-        }
-
-        return parts[1].trim();
+        return TokenUtils.tokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
     }
 }

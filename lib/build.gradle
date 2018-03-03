@@ -35,7 +35,6 @@ dependencies {
     compile 'com.auth0:jwks-rsa:0.3.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
     compile 'commons-codec:commons-codec:1.11'
-//    compile 'com.google.guava:guava:19.0'
     compile 'org.springframework.security:spring-security-core:5.0.3.RELEASE'
     compile 'org.springframework.security:spring-security-web:5.0.3.RELEASE'
     compile 'org.springframework:spring-webflux:5.0.4.RELEASE'

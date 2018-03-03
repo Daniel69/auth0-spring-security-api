@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.web.server.context.SecurityContextRepository;
+import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
  * @author Sebastien Astie
  */
-public class BearerSecurityContextRepository implements SecurityContextRepository {
+public class BearerSecurityContextRepository implements ServerSecurityContextRepository {
     private final static Logger logger = LoggerFactory.getLogger(BearerSecurityContextRepository.class);
 
     @Override

@@ -84,7 +84,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
 
     private static JWTVerifier providerForRS256(RSAPublicKey key, String issuer, String audience) {
-        return JWT.require(Algorithm.RSA256(key))
+        return JWT.require(Algorithm.RSA256(key, null))
                 .withIssuer(issuer)
                 .withAudience(audience)
                 .build();

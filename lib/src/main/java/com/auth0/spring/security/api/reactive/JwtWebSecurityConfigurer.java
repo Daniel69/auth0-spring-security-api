@@ -6,9 +6,8 @@ import com.auth0.spring.security.api.JwtAuthenticationProvider;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.config.web.server.HttpSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.authorization.ExceptionTranslationWebFilter;
 import reactor.core.publisher.Mono;
@@ -97,18 +96,19 @@ public class JwtWebSecurityConfigurer {
     }
 
     /**
-     * Further configure the {@link HttpSecurity} object with some sensible defaults
+     * Further configure the {@link ServerHttpSecurity} object with some sensible defaults
      * by registering objects to obtain a bearer token from a request.
      * @param http configuration for Spring
      * @return the http configuration for further customizations
      * @throws Exception
      */
     @SuppressWarnings("unused")
-    public HttpSecurity configure(HttpSecurity http) throws Exception {
-        ReactiveAuthenticationManager authenticationManager = new ReactiveAuthenticationManager() {
-            @Override
-            public Mono<Authentication> authenticate(Authentication authentication) {
+    public ServerHttpSecurity configure(ServerHttpSecurity http) throws Exception {
+        ReactiveAuthenticationManager authenticationManager = authentication -> {
+            try{
                 return Mono.justOrEmpty(provider.authenticate(authentication));
+            } catch (Throwable t){
+                return Mono.error(t);
             }
         };
         ExceptionTranslationWebFilter exceptionHandling = new ExceptionTranslationWebFilter();
